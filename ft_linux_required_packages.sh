@@ -41,6 +41,88 @@ function check_package {
         "special")
             # Special checks for specific packages
             case "$pkg" in
+                # === CORE UTILITIES (check for key binaries) ===
+                "Coreutils")
+                    if command -v ls >/dev/null 2>&1 && command -v cp >/dev/null 2>&1 && command -v cat >/dev/null 2>&1; then
+                        printf "${GREEN}✓ Installed${NC}\n"; SUCCESS=$((SUCCESS + 1))
+                    else printf "${RED}✗ Missing${NC}\n"; fi
+                    ;;
+                
+                "Findutils")
+                    if command -v find >/dev/null 2>&1 && command -v xargs >/dev/null 2>&1; then
+                        printf "${GREEN}✓ Installed${NC}\n"; SUCCESS=$((SUCCESS + 1))
+                    else printf "${RED}✗ Missing${NC}\n"; fi
+                    ;;
+                
+                "Diffutils")
+                    if command -v diff >/dev/null 2>&1 && command -v cmp >/dev/null 2>&1; then
+                        printf "${GREEN}✓ Installed${NC}\n"; SUCCESS=$((SUCCESS + 1))
+                    else printf "${RED}✗ Missing${NC}\n"; fi
+                    ;;
+                "Sysvinit")
+                    if [ -f /sbin/init ] || [ -f /sbin/telinit ]; then
+                        printf "${GREEN}✓ Installed${NC}\n"; SUCCESS=$((SUCCESS + 1))
+                    else printf "${RED}✗ Missing${NC}\n"; fi
+                    ;;
+                
+                "Shadow")
+                    if command -v passwd >/dev/null 2>&1 && [ -f /etc/shadow ]; then
+                        printf "${GREEN}✓ Installed${NC}\n"; SUCCESS=$((SUCCESS + 1))
+                    else printf "${RED}✗ Missing${NC}\n"; fi
+                    ;;
+                
+                "Util-linux")
+                    if command -v mount >/dev/null 2>&1 && command -v fdisk >/dev/null 2>&1; then
+                        printf "${GREEN}✓ Installed${NC}\n"; SUCCESS=$((SUCCESS + 1))
+                    else printf "${RED}✗ Missing${NC}\n"; fi
+                    ;;
+                
+                "Procps")
+                    if command -v ps >/dev/null 2>&1 && command -v top >/dev/null 2>&1; then
+                        printf "${GREEN}✓ Installed${NC}\n"; SUCCESS=$((SUCCESS + 1))
+                    else printf "${RED}✗ Missing${NC}\n"; fi
+                    ;;
+                
+                "Psmisc")
+                    if command -v killall >/dev/null 2>&1 && command -v pstree >/dev/null 2>&1; then
+                        printf "${GREEN}✓ Installed${NC}\n"; SUCCESS=$((SUCCESS + 1))
+                    else printf "${RED}✗ Missing${NC}\n"; fi
+                    ;;
+                
+                "IPRoute2")
+                    if command -v ip >/dev/null 2>&1 && command -v ss >/dev/null 2>&1; then
+                        printf "${GREEN}✓ Installed${NC}\n"; SUCCESS=$((SUCCESS + 1))
+                    else printf "${RED}✗ Missing${NC}\n"; fi
+                    ;;
+                
+                "Inetutils")
+                    if command -v ping >/dev/null 2>&1 && command -v ftp >/dev/null 2>&1; then
+                        printf "${GREEN}✓ Installed${NC}\n"; SUCCESS=$((SUCCESS + 1))
+                    else printf "${RED}✗ Missing${NC}\n"; fi
+                    ;;
+                
+                # === DOCUMENTATION ===
+                "Man-pages")
+                    if [ -d /usr/share/man ] && [ -f /usr/share/man/man1/ls.1.gz ]; then
+                        printf "${GREEN}✓ Installed${NC}\n"; SUCCESS=$((SUCCESS + 1))
+                    else printf "${RED}✗ Missing${NC}\n"; fi
+                    ;;
+                
+                "Man-DB")
+                    if command -v man >/dev/null 2>&1 && command -v apropos >/dev/null 2>&1; then
+                        printf "${GREEN}✓ Installed${NC}\n"; SUCCESS=$((SUCCESS + 1))
+                    else printf "${RED}✗ Missing${NC}\n"; fi
+                    ;;
+                "XML::Parser")
+                    if [ -f /usr/lib/libexpat.so ] || perl -MXML::Parser -e "1" 2>/dev/null; then
+                        printf "${GREEN}✓ Installed${NC}\n"; SUCCESS=$((SUCCESS + 1))
+                    else printf "${RED}✗ Missing${NC}\n"; fi
+                    ;;
+                "Texinfo")
+                    if command -v makeinfo >/dev/null 2>&1 && command -v info >/dev/null 2>&1; then
+                        printf "${GREEN}✓ Installed${NC}\n"; SUCCESS=$((SUCCESS + 1))
+                    else printf "${RED}✗ Missing${NC}\n"; fi
+                    ;;
                 "Glibc")
                     if [ -f /usr/lib/libc.so ] || [ -f /lib/libc.so.6 ]; then
                         printf "${GREEN}✓ Installed${NC}\n"; SUCCESS=$((SUCCESS + 1))
@@ -55,10 +137,6 @@ function check_package {
                     else printf "${RED}✗ Missing${NC}\n"; fi ;;
                 "Eudev")
                     if command -v udevadm >/dev/null 2>&1 || [ -f /sbin/udevd ]; then
-                        printf "${GREEN}✓ Installed${NC}\n"; SUCCESS=$((SUCCESS + 1))
-                    else printf "${RED}✗ Missing${NC}\n"; fi ;;
-                "Sysvinit")
-                    if [ -f /sbin/init ] && /sbin/init --version 2>&1 | grep -q "sysvinit"; then
                         printf "${GREEN}✓ Installed${NC}\n"; SUCCESS=$((SUCCESS + 1))
                     else printf "${RED}✗ Missing${NC}\n"; fi ;;
                 *)
