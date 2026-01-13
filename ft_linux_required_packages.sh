@@ -41,6 +41,77 @@ function check_package {
         "special")
             # Special checks for specific packages
             case "$pkg" in
+                "Acl")
+                    if command -v getfacl >/dev/null 2>&1 && command -v setfacl >/dev/null 2>&1; then
+                        printf "${GREEN}✓ Installed${NC}\n"; SUCCESS=$((SUCCESS + 1))
+                    else printf "${RED}✗ Missing${NC}\n"; fi
+                    ;;
+                
+                "Attr")
+                    if command -v getfattr >/dev/null 2>&1 && command -v setfattr >/dev/null 2>&1; then
+                        printf "${GREEN}✓ Installed${NC}\n"; SUCCESS=$((SUCCESS + 1))
+                    else printf "${RED}✗ Missing${NC}\n"; fi
+                    ;;
+                
+                "Bc")
+                    if command -v bc >/dev/null 2>&1; then
+                        printf "${GREEN}✓ Installed${NC}\n"; SUCCESS=$((SUCCESS + 1))
+                    else printf "${RED}✗ Missing${NC}\n"; fi
+                    ;;
+                
+                "Check")
+                    if command -v checkmk >/dev/null 2>&1 || [ -f /usr/lib/libcheck.so ] || [ -f /usr/include/check.h ]; then
+                        printf "${GREEN}✓ Installed${NC}\n"; SUCCESS=$((SUCCESS + 1))
+                    else printf "${RED}✗ Missing${NC}\n"; fi
+                    ;;
+                
+                "E2fsprogs")
+                    if command -v e2fsck >/dev/null 2>&1 || command -v tune2fs >/dev/null 2>&1; then
+                        printf "${GREEN}✓ Installed${NC}\n"; SUCCESS=$((SUCCESS + 1))
+                    else printf "${RED}✗ Missing${NC}\n"; fi
+                    ;;
+                
+                "GDBM")
+                    if [ -f /usr/lib/libgdbm.so ] || [ -f /usr/include/gdbm.h ] || command -v gdbm_load >/dev/null 2>&1; then
+                        printf "${GREEN}✓ Installed${NC}\n"; SUCCESS=$((SUCCESS + 1))
+                    else printf "${RED}✗ Missing${NC}\n"; fi
+                    ;;
+                
+                "Gperf")
+                    if command -v gperf >/dev/null 2>&1; then
+                        printf "${GREEN}✓ Installed${NC}\n"; SUCCESS=$((SUCCESS + 1))
+                    else printf "${RED}✗ Missing${NC}\n"; fi
+                    ;;
+                
+                "Iana-Etc")
+                    if [ -f /etc/protocols ] && [ -f /etc/services ]; then
+                        printf "${GREEN}✓ Installed${NC}\n"; SUCCESS=$((SUCCESS + 1))
+                    else printf "${RED}✗ Missing${NC}\n"; fi
+                    ;;
+                
+                "Libpipeline")
+                    if [ -f /usr/lib/libpipeline.so ] || [ -f /usr/include/pipeline.h ]; then
+                        printf "${GREEN}✓ Installed${NC}\n"; SUCCESS=$((SUCCESS + 1))
+                    else printf "${RED}✗ Missing${NC}\n"; fi
+                    ;;
+                
+                "M4")
+                    if command -v m4 >/dev/null 2>&1; then
+                        printf "${GREEN}✓ Installed${NC}\n"; SUCCESS=$((SUCCESS + 1))
+                    else printf "${RED}✗ Missing${NC}\n"; fi
+                    ;;
+                
+                "Sysklogd")
+                    if [ -f /usr/sbin/syslogd ] || [ -f /usr/sbin/klogd ] || [ -f /etc/syslog.conf ]; then
+                        printf "${GREEN}✓ Installed${NC}\n"; SUCCESS=$((SUCCESS + 1))
+                    else printf "${RED}✗ Missing${NC}\n"; fi
+                    ;;
+                
+                "Time Zone Data")
+                    if [ -d /usr/share/zoneinfo ] && [ -f /usr/share/zoneinfo/UTC ]; then
+                        printf "${GREEN}✓ Installed${NC}\n"; SUCCESS=$((SUCCESS + 1))
+                    else printf "${RED}✗ Missing${NC}\n"; fi
+                    ;;
                 # === CORE UTILITIES (check for key binaries) ===
                 "Coreutils")
                     if command -v ls >/dev/null 2>&1 && command -v cp >/dev/null 2>&1 && command -v cat >/dev/null 2>&1; then
@@ -103,7 +174,7 @@ function check_package {
                 
                 # === DOCUMENTATION ===
                 "Man-pages")
-                    if [ -d /usr/share/man ] && [ -f /usr/share/man/man1/ls.1.gz ]; then
+                    if [ -d /usr/share/man ] && [ -d -d /usr/share/man3 ]; then
                         printf "${GREEN}✓ Installed${NC}\n"; SUCCESS=$((SUCCESS + 1))
                     else printf "${RED}✗ Missing${NC}\n"; fi
                     ;;
@@ -178,75 +249,74 @@ echo -e "Date: $(date)\n"
 # ==================== Package Checks ====================
 echo -e "${YELLOW}Checking Core Packages...${NC}"
 
-# Group 1: Libraries (usually have .so files)
-echo -e "\n${BLUE}[Libraries]${NC}"
-check_package "Glibc" "special"
-check_package "GMP" "lib"
-check_package "MPFR" "lib"
-check_package "MPC" "lib"
-check_package "Zlib" "lib"
-check_package "Expat" "lib"
-check_package "Libcap" "lib"
-check_package "XML::Parser" "lib"
-
-# Group 2: Binaries (have executables)
-echo -e "\n${BLUE}[Binaries/Tools]${NC}"
-check_package "Bash" "special"
-check_package "Coreutils" "bin"
-check_package "Findutils" "bin"
-check_package "Grep" "bin"
-check_package "Sed" "bin"
-check_package "Gawk" "bin"
-check_package "Tar" "bin"
-check_package "Gzip" "bin"
-check_package "Bzip2" "bin"
-check_package "Xz" "bin"
-check_package "Make" "bin"
-check_package "Patch" "bin"
-check_package "Diffutils" "bin"
-check_package "File" "bin"
-
-# Group 3: System Tools
-echo -e "\n${BLUE}[System Tools]${NC}"
-check_package "Binutils" "special"
-check_package "GCC" "special"
-check_package "GRUB" "special"
-check_package "Eudev" "special"
-check_package "Sysvinit" "special"
-check_package "Shadow" "bin"
-check_package "Util-linux" "bin"
-check_package "Procps" "bin"
-check_package "Psmisc" "bin"
-check_package "Kbd" "bin"
-check_package "Kmod" "bin"
-check_package "IPRoute2" "bin"
-check_package "Inetutils" "bin"
-
-# Group 4: Development Tools
-echo -e "\n${BLUE}[Development Tools]${NC}"
+check_package "Acl"
+check_package "Attr"
 check_package "Autoconf" "bin"
 check_package "Automake" "bin"
-check_package "Libtool" "bin"
+check_package "Bash" "special"
+check_package "Bc"
+check_package "Binutils" "special"
 check_package "Bison" "bin"
-check_package "Flex" "bin"
-check_package "Pkg-config" "bin"
-check_package "Gettext" "bin"
-check_package "Intltool" "bin"
-
-# Group 5: Documentation & Misc
-echo -e "\n${BLUE}[Documentation & Misc]${NC}"
-check_package "Man-pages" "lib"
-check_package "Man-DB" "bin"
-check_package "Texinfo" "bin"
-check_package "Groff" "bin"
-check_package "Vim" "bin"
-check_package "Less" "bin"
-check_package "Ncurses" "lib"
-check_package "Readline" "lib"
-check_package "Perl" "bin"
-check_package "Tcl" "lib"
-check_package "Expect" "bin"
+check_package "Bzip2" "bin"
+check_package "Check"
+check_package "Coreutils" "special"
 check_package "DejaGNU" "bin"
+check_package "Diffutils" "special"
+check_package "Eudev" "special"
+check_package "E2fsprogs"
+check_package "Expat" "lib"
+check_package "Expect" "bin"
+check_package "File" "bin"
+check_package "Findutils" "special"
+check_package "Flex" "bin"
+check_package "Gawk" "bin"
+check_package "GCC" "special"
+check_package "GDBM"
+check_package "Gettext" "bin"
+check_package "Glibc" "special"
+check_package "GMP" "lib"
+check_package "Gperf"
+check_package "Grep" "bin"
+check_package "Groff" "bin"
+check_package "GRUB" "special"
+check_package "Gzip" "bin"
+check_package "Iana-Etc"
+check_package "Inetutils" "special"
+check_package "Intltool" "bin"
+check_package "IPRoute2" "special"
+check_package "Kbd" "bin"
+check_package "Kmod" "bin"
+check_package "Less" "bin"
+check_package "Libpipeline"
+check_package "Libcap" "lib"
+check_package "Libtool" "bin"
+check_package "M4"
+check_package "Make" "bin"
+check_package "Man-DB" "special"
+check_package "Man-pages" "special"
+check_package "MPC" "lib"
+check_package "MPFR" "lib"
+check_package "Ncurses" "lib"
+check_package "Patch" "bin"
+check_package "Perl" "bin"
+check_package "Pkg-config" "bin"
+check_package "Procps" "special"
+check_package "Psmisc" "special"
+check_package "Readline" "lib"
+check_package "Sed" "bin"
+check_package "Shadow" "special"
+check_package "Sysklogd"
+check_package "Sysvinit" "special"
+check_package "Tar" "bin"
+check_package "Tcl" "lib"
+check_package "Texinfo" "special"
+check_package "Time Zone Data"
+check_package "Udev" "lib"
+check_package "Util-linux" "special"
+check_package "Vim" "bin"
+check_package "XML::Parser" "lib"
+check_package "Xz" "bin"
+check_package "Zlib" "lib"
 
 # ==================== Results ====================
 show_results
