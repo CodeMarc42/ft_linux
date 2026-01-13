@@ -171,6 +171,44 @@ function check_package {
                         printf "${GREEN}✓ Installed${NC}\n"; SUCCESS=$((SUCCESS + 1))
                     else printf "${RED}✗ Missing${NC}\n"; fi
                     ;;
+                "Time Zone Data")
+                    # Check for timezone database files
+                    if [ -d /usr/share/zoneinfo ] && [ -f /usr/share/zoneinfo/UTC ]; then
+                        printf "${GREEN}✓ Installed${NC}\n"; SUCCESS=$((SUCCESS + 1))
+                    else
+                        printf "${RED}✗ Missing${NC}\n"
+                    fi
+                    ;;
+                
+                "Iana-Etc")
+                    # Check for protocol and service files
+                    if [ -f /etc/protocols ] && [ -f /etc/services ]; then
+                        printf "${GREEN}✓ Installed${NC}\n"; SUCCESS=$((SUCCESS + 1))
+                    else
+                        printf "${RED}✗ Missing${NC}\n"
+                    fi
+                    ;;
+                
+                "Sysklogd")
+                    # Check for system logging daemon
+                    if [ -f /usr/sbin/syslogd ] || [ -f /usr/sbin/klogd ] || \
+                       [ -f /etc/syslog.conf ] || [ -f /etc/rsyslog.conf ]; then
+                        printf "${GREEN}✓ Installed${NC}\n"; SUCCESS=$((SUCCESS + 1))
+                    else
+                        printf "${RED}✗ Missing${NC}\n"
+                    fi
+                    ;;
+                
+                "E2fsprogs")
+                    # Check for ext filesystem utilities
+                    if command -v e2fsck >/dev/null 2>&1 || \
+                       command -v tune2fs >/dev/null 2>&1 || \
+                       command -v mkfs.ext4 >/dev/null 2>&1; then
+                        printf "${GREEN}✓ Installed${NC}\n"; SUCCESS=$((SUCCESS + 1))
+                    else
+                        printf "${RED}✗ Missing${NC}\n"
+                    fi
+                    ;;
                 
                 # === DOCUMENTATION ===
                 "Man-pages")
@@ -263,7 +301,7 @@ check_package "Coreutils" "special"
 check_package "DejaGNU" "bin"
 check_package "Diffutils" "special"
 check_package "Eudev" "special"
-check_package "E2fsprogs" "bin"
+check_package "E2fsprogs" "special"
 check_package "Expat" "lib"
 check_package "Expect" "bin"
 check_package "File" "bin"
@@ -280,14 +318,14 @@ check_package "Grep" "bin"
 check_package "Groff" "bin"
 check_package "GRUB" "special"
 check_package "Gzip" "bin"
-check_package "Iana-Etc" "bin"
+check_package "Iana-Etc" "special"
 check_package "Inetutils" "special"
 check_package "Intltool" "bin"
 check_package "IPRoute2" "special"
 check_package "Kbd" "bin"
 check_package "Kmod" "bin"
 check_package "Less" "bin"
-check_package "Libpipeline"
+check_package "Libpipeline" "lib"
 check_package "Libcap" "lib"
 check_package "Libtool" "bin"
 check_package "M4" "bin"
@@ -305,12 +343,12 @@ check_package "Psmisc" "special"
 check_package "Readline" "lib"
 check_package "Sed" "bin"
 check_package "Shadow" "special"
-check_package "Sysklogd" "bin"
+check_package "Sysklogd" "special"
 check_package "Sysvinit" "special"
 check_package "Tar" "bin"
 check_package "Tcl" "lib"
 check_package "Texinfo" "special"
-check_package "Time Zone Data" "bin"
+check_package "Time Zone Data" "special"
 check_package "Udev" "lib"
 check_package "Util-linux" "special"
 check_package "Vim" "bin"
