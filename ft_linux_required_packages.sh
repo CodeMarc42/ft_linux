@@ -52,7 +52,20 @@ function check_package {
                         printf "${GREEN}✓ Installed${NC}\n"; SUCCESS=$((SUCCESS + 1))
                     else printf "${RED}✗ Missing${NC}\n"; fi
                     ;;
-                
+                "Bash")
+                    if command -v bash >/dev/null 2>&1; then
+                        printf "${GREEN}✓ Installed${NC}\n"; SUCCESS=$((SUCCESS + 1))
+                    else
+                        printf "${RED}✗ Missing${NC}\n"
+                    fi
+                    ;;
+                "Binutils")
+                    if command -v ld >/dev/null 2>&1 && command -v ar >/dev/null 2>&1; then
+                        printf "${GREEN}✓ Installed${NC}\n"; SUCCESS=$((SUCCESS + 1))
+                    else
+                        printf "${RED}✗ Missing${NC}\n"
+                    fi
+                    ;;
                 "Bc")
                     if command -v bc >/dev/null 2>&1; then
                         printf "${GREEN}✓ Installed${NC}\n"; SUCCESS=$((SUCCESS + 1))
