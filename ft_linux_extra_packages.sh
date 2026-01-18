@@ -2,6 +2,10 @@
 
 set -e
 
+GREEN="\e[32m"
+RED="\e[31m"
+RESET="\e[0m"
+
 echo "Checking optional / extra packages:"
 echo "----------------------------------"
 
@@ -23,19 +27,19 @@ check_file() {
 
 check() {
     local name="$1"
-    local result="NOT FOUND"
+    local result="${RED}NOT FOUND${RESET}"
 
     if [ "$2" = "bin" ] && check_bin "$3"; then
-        result="INSTALLED"
+        result="${GREEN}INSTALLED${RESET}"
     elif [ "$2" = "pkg" ] && check_pkg "$3"; then
-        result="INSTALLED"
+        result="${GREEN}INSTALLED${RESET}"
     elif [ "$2" = "lib" ] && check_lib "$3"; then
-        result="INSTALLED"
+        result="${GREEN}INSTALLED${RESET}"
     elif [ "$2" = "file" ] && check_file "$3"; then
-        result="INSTALLED"
+        result="${GREEN}INSTALLED${RESET}"
     fi
 
-    printf "%-12s : %s\n" "$name" "$result"
+    printf "%-12s : %b\n" "$name" "$result"
 }
 
 # ---- Checks ----
