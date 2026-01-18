@@ -41,7 +41,7 @@ check() {
 # ---- Checks ----
 
 
-printf "\nNetwork:"
+printf "\nNetwork:\n"
 check "OpenSSL"      bin  openssl
 check "Dhcpcd"       bin  dhcpcd
 check "Wget"         bin  wget
@@ -49,7 +49,7 @@ check "Net-Tools"    bin  arp
 check "Curl"         bin  curl
 check "Lynx"         bin  lynx
 
-printf "\nSecurity:"
+printf "\nSecurity:\n"
 check "OpenSSH"      bin  ssh
 check "Make-ca"      bin  make-ca
 check "Nettle"       bin  nettle-hash
@@ -57,18 +57,18 @@ check "p11-kit"      bin  p11-kit
 check "Libxcrypt"    pkg  libxcrypt
 check "Linux-PAM"    pkg  pwhistory_helper
 
-printf "\nText Editors:"
+printf "\nText Editors:\n"
 check "Nano"         bin  nano
 
-printf "\nVirtualization:"
+printf "\nVirtualization:\n"
 check "Qemu"         bin  qemu
 
-printf "\nSystem Utilities:"
+printf "\nSystem Utilities:\n"
 check "Fcron"        bin  fcron
 check "Whitch"       bin  which
 check "Dbus"         bin  dbus-monitor
 
-printf "\nProgramming:"
+printf "\nProgramming:\n"
 check "Nasm"         bin  nasm
 check "Git"          bin  git
 check "Cmake"        bin  cmake
@@ -79,9 +79,9 @@ check "Ninja"        bin  ninja
 check "Meson"        bin  meson
 check "dtc"          bin  dtc
 
-printf "\nCompression:"
+printf "\nCompression:\n"
 check "Lz4"          bin  lz4
 check "Zstd"         bin  zstd
 
-printf "\nDatabases:"
+printf "\nDatabases:\n"
 check "Sqlite"       bin  sqlite3
