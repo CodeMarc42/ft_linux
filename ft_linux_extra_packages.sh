@@ -83,6 +83,14 @@ check "Ninja"        bin  ninja
 check "Meson"        bin  meson
 check "dtc"          bin  dtc
 
+printf "\Graphical Environments:\n"
+check "Xorg Applications" bin  xauth
+check "Xorg Server"  bin  gtf
+check "twm"          bin  twm
+check "xterm"        bin  xterm
+check "xclock"       bin  xclock
+check "xinit"        bin  xinit
+
 printf "\nCompression:\n"
 check "Lz4"          bin  lz4
 check "Zstd"         bin  zstd
