@@ -40,25 +40,47 @@ check() {
 
 # ---- Checks ----
 
-check "Python"       bin  python3
-check "Flit-Core"    bin  flit
-check "Packaging"    pkg  packaging
-check "Wheel"        bin  wheel
-check "Setuptools"   pkg  setuptools
-check "MarkupSafe"   pkg  markupsafe
-check "Jinja2"       pkg  jinja2
-check "Sqlite"       bin  sqlite3
-check "Meson"        bin  meson
-check "Ninja"        bin  ninja
-check "Lz4"          bin  lz4
-check "Zstd"         bin  zstd
+
+echo "\nNetwork:"
 check "OpenSSL"      bin  openssl
-check "Libffi"       pkg  libffi
-check "Libelf"       pkg  libelf
-check "Pcre2"        pkg  libpcre2-8
-check "ISL"          pkg  isl
+check "Dhcpcd"       bin  dhcpcd
+check "Wget"         bin  wget
+check "Net-Tools"    bin  arp
+check "Curl"         bin  curl
+check "Lynx"         bin  lynx
+
+echo "\nSecurity:"
+check "OpenSSH"      bin  ssh
+check "Make-ca"      bin  make-ca
+check "Nettle"       bin  nettle-hash
+check "p11-kit"      bin  p11-kit
 check "Libxcrypt"    pkg  libxcrypt
+
+echo "\nText Editors:"
 check "Nano"         bin  nano
 
-echo "----------------------------------"
-echo "Done."
+echo "\nVirtualization:"
+check "Qemu"         bin  qemu
+
+echo "\nSystem Utilities:"
+check "Fcron"        bin  fcron
+check "Whitch"       bin  which
+check "Dbus"         bin  dbus-monitor
+
+echo "\nProgramming:"
+check "Nasm"         bin  nasm
+check "Git"          bin  git
+check "Cmake"        bin  cmake
+check "SWIG"         bin  swig
+check "Python"       bin  python3
+check "Wheel"        bin  wheel
+check "Ninja"        bin  ninja
+check "Meson"        bin  meson
+check "dtc"          bin  dtc
+
+echo "\nCompression:"
+check "Lz4"          bin  lz4
+check "Zstd"         bin  zstd
+
+echo "\nDatabases:"
+check "Sqlite"       bin  sqlite3
