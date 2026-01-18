@@ -55,7 +55,7 @@ check "Make-ca"      bin  make-ca
 check "Nettle"       bin  nettle-hash
 check "p11-kit"      bin  p11-kit
 check "Libxcrypt"    pkg  libxcrypt
-check "Linux-PAM"    pkg  pwhistory_helper
+check "Linux-PAM"    bin  pwhistory_helper
 
 printf "\nText Editors:\n"
 check "Nano"         bin  nano
